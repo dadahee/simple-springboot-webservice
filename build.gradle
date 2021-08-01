@@ -1,0 +1,36 @@
+buildscript {
+    ext { // build.gradle에서 사용하는 전역 변수를 설정
+        springBootVersion = '2.5.3'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management' // spring boot의 의존성 관리 플러그임
+
+group 'com.spring.book'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories { // 의존성 라이브러리들을 어떤 원격 저장소에서 받을지 명시
+    mavenCentral()
+    jcenter()
+}
+
+dependencies { // 개발에 필요한 의존성 선언
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+// 인텔리제이는 메이븐 저장소의 데이터를 인덱싱하여 관리 -> 커뮤니티 버전을 사용해도 의존성 자동완성 가능
+
+test {
+    useJUnitPlatform()
+}
