@@ -7,8 +7,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,7 +29,7 @@ class HelloControllerTest {
     @Autowired
     private MockMvc mvc; // 웹 API를 테스트할 때 사용
     // 스프링 MVC 테스트의 시작점
-    // 이 클래스를 통해 http get, post 등에 대한 api xptmxm rksmd
+    // 이 클래스를 통해 http get, post 등에 대한 api 테스트 가능
 
     @Test
     public void hello가_리턴된다() throws Exception {
@@ -37,5 +38,19 @@ class HelloControllerTest {
         mvc.perform(get("/hello")) // MockMvc를 통해 /hello wnthfh get 요청, 체이닝 지원
                 .andExpect(status().isOk()) // HTTP header의 status 검증 - 200, isOk 인지 아닌지 확인
                 .andExpect(content().string(hello)); // 응답 본문의 내용 검증
+    }
+
+    @Test
+    public void helloDto가_리턴된다() throws Exception {
+        String name = "hello";
+        int amount = 1000;
+
+        mvc.perform(
+                get("/hello/dto")
+                        .param("name", name) // param(): api 테스트할 때 사용될 요청 파라미터 설정, 값은 String만 허용
+                        .param("amount", String.valueOf(amount))) // int -> String으로 변환
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(name))) // jsonPath: json 응답값을 필드별로 검증하는 메소드
+                .andExpect(jsonPath("$.amount", is(amount))); // $를 기준으로 필드명 명시
     }
 }
