@@ -27,6 +27,7 @@ repositories { // 의존성 라이브러리들을 어떤 원격 저장소에서 
 
 dependencies { // 개발에 필요한 의존성 선언
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.projectlombok:lombok' // 필수 라이브러리 - getter, setter, 생성자, toString 등을 어노테이션으로 자동 생성
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 // 인텔리제이는 메이븐 저장소의 데이터를 인덱싱하여 관리 -> 커뮤니티 버전을 사용해도 의존성 자동완성 가능
