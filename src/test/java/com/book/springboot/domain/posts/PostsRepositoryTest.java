@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class) //jUnit4의 @RunWith(SpringRunner.class)
@@ -55,9 +57,32 @@ class PostsRepositoryTest {
          * then
          */
         Posts posts = postsList.get(0);
-        Assertions.assertThat(posts.getTitle()).isEqualTo(title);
-        Assertions.assertThat(posts.getContent()).isEqualTo(content);
+        assertThat(posts.getTitle()).isEqualTo(title);
+        assertThat(posts.getContent()).isEqualTo(content);
 
+    }
+
+    @Test
+    public void BaseTimeEntity_등록() {
+        //given
+        LocalDateTime now = LocalDateTime.of(2021, 8, 5, 0, 0, 0);
+        postsRepository.save(Posts.builder()
+                .title("BaseTimeEntity create Test Title")
+                .content("BaseTimeEntity create Test Content")
+                .author("BaseTimeEntity create Test author")
+                .build());
+
+        //when
+        List<Posts> postsList = postsRepository.findAll();
+
+        //then
+        Posts posts = postsList.get(0);
+
+        System.out.println(">>>>>> createDateTime = " + posts.getCreatedDateTime());
+        System.out.println(">>>>>> modifiedDateTime = " + posts.getModifiedDateTime());
+
+        assertThat(posts.getCreatedDateTime()).isAfter(now);
+        assertThat(posts.getModifiedDateTime()).isAfter(now);
     }
 
 }

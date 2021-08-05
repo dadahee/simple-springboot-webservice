@@ -1,5 +1,6 @@
 package com.book.springboot.domain.posts;
 
+import com.book.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @Getter // 롬복 어노테이션
 @NoArgsConstructor // 롬복 어노테이션
 @Entity // JPA 어노테이션
-public class Posts { // 실제 데이터베이스의 테이블과 매칭될 클래스, Entity 클래스
+public class Posts extends BaseTimeEntity { // 실제 데이터베이스의 테이블과 매칭될 클래스, Entity 클래스
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,7 +2,9 @@ package com.book.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+@EnableJpaAuditing // JPA auditing 어노테이션을 모두 활성화
 // 프로젝트의 메인 클래스 -> 스프링 부트의 자동 설정, 스프링 빈 읽기와 생성을 모두 자동으로 설정
 // 어노테이션 하위 경로부터 설정을 읽어가므로 프로젝트 최상단에 위치해야 함
 @SpringBootApplication
@@ -14,3 +16,4 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 }
+
