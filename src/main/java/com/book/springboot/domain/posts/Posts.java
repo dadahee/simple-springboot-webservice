@@ -36,4 +36,9 @@ public class Posts { // 실제 데이터베이스의 테이블과 매칭될 클�
         this.content = content;
         this.author = author;
     }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
