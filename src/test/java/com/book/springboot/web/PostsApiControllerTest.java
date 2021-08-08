@@ -2,6 +2,7 @@ package com.book.springboot.web;
 
 import com.book.springboot.domain.posts.Posts;
 import com.book.springboot.domain.posts.PostsRepository;
+import com.book.springboot.web.dto.PostsResponseDto;
 import com.book.springboot.web.dto.PostsSaveRequestDto;
 import com.book.springboot.web.dto.PostsUpdateRequestDto;
 import org.junit.jupiter.api.AfterEach;
@@ -32,7 +33,7 @@ import static org.assertj.core.api.Assertions.*;
 
 //jUnit5
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //랜덤포트 실ㅆ
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //랜덤포트
 class PostsApiControllerTest {
 
     @LocalServerPort
@@ -47,6 +48,36 @@ class PostsApiControllerTest {
     @AfterEach
     public void tearDown() throws Exception {
         postsRepository.deleteAll();
+    }
+
+    @Test
+    public void posts_조회된다() throws Exception {
+        //given
+        String title = "Read Test Title";
+        String content = "Read Test Content";
+        String author = "Read Test Author";
+
+//        PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
+//                .title(title)
+//                .content(content)
+//                .author(author)
+//                .build();
+
+        Posts savePosts = postsRepository.save(Posts.builder()
+                .title(title)
+                .content(content)
+                .author(author)
+                .build());
+
+        String url = "http://localhost:" + port + "/api/v1/posts/" + savePosts.getId();
+        HttpEntity<String> requestEntity = new HttpEntity<>("");
+
+        //when
+        //exchange 메소드: HTTP 헤더를 새로 만들 수 있고 어떤 HTTP 메서드도 사용 가능
+        ResponseEntity<PostsResponseDto> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, PostsResponseDto.class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
