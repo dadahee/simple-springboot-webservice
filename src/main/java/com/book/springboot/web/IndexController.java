@@ -13,4 +13,11 @@ public class IndexController {
         // 앞의 디렉토리 경로와 뒤의 파일 확장자는 자동으로 지정
         return "index"; // -> index.mustache를 view resolver가 처리
     }
+
+    @GetMapping("/posts/save")
+    public String postsSave() {
+        return "posts-save";
+    }
+
+
 }
