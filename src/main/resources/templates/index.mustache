@@ -11,5 +11,30 @@
             <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
         </div>
     </div>
+    <br>
+    <!-- 목록 출력 영역 -->
+    <table class="table table-horizontal table-boarded">
+        <thead class="thead-strong">
+        <tr>
+            <th>게시글 번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>최종수정일</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#posts}} <!-- posts라는 List를 순회 -->
+            <tr>
+                <td>{{ id }}</td>
+                <td>{{ title }}</td>
+                <td>{{ author }}</td>
+                <td>{{ content }}</td>
+                <td>{{ createdDateTime }}</td>
+                <td>{{ modifiedDateTime }}</td>
+            </tr>
+        {{/posts}}
+        </tbody>
+    </table>
 
 {{>layout/footer}}

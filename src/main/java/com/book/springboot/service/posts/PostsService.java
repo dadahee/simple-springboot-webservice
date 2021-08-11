@@ -2,6 +2,7 @@ package com.book.springboot.service.posts;
 
 import com.book.springboot.domain.posts.Posts;
 import com.book.springboot.domain.posts.PostsRepository;
+import com.book.springboot.web.dto.PostsListResponseDto;
 import com.book.springboot.web.dto.PostsResponseDto;
 import com.book.springboot.web.dto.PostsSaveRequestDto;
 import com.book.springboot.web.dto.PostsUpdateRequestDto;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /** 스프링에서 빈을 주입받는 방법
@@ -43,5 +46,13 @@ public class PostsService {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id = " + id));
         return new PostsResponseDto(entity);
+    }
+
+    // readOnly 옵션: 트랜잭션 범위는 유지, 조회 기능만 남겨두어 조회 속도 개선 -> 조회만 하는 메소드에서 사용하기
+    @Transactional
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new) // .map(posts -> new PostsListResponseDto(posts))
+                .collect(Collectors.toList());
     }
 }
