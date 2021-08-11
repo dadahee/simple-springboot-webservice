@@ -44,6 +44,10 @@ dependencies { // 개발에 필요한 의존성 선언
 
     // Mustache로 화면 구성하기
     implementation 'org.springframework.boot:spring-boot-starter-mustache'
+
+    // Swagger 사용하기
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 }
 // 인텔리제이는 메이븐 저장소의 데이터를 인덱싱하여 관리 -> 커뮤니티 버전을 사용해도 의존성 자동완성 가능
 
