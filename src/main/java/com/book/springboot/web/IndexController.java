@@ -26,5 +26,4 @@ public class IndexController {
         return "posts-save";
     }
 
-
 }
