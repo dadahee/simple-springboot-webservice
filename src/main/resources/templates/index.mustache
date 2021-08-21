@@ -27,7 +27,7 @@
         {{#posts}} <!-- posts라는 List를 순회 -->
             <tr>
                 <td>{{ id }}</td>
-                <td>{{ title }}</td>
+                <td><a href="/posts/update/{{id}}">{{ title }}</a></td>
                 <td>{{ author }}</td>
                 <!-- 왜 content 불러오기 하면 안 될까?? -->
                 <td>{{ createdDateTime }}</td>

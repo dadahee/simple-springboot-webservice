@@ -42,7 +42,7 @@ var main = {
         var id = $('#id').val();
 
         $.ajax({
-            type: 'PUT',
+            type: 'PUT', // REST 규약에 맞도록 -> C(post), R(get), U(put), D(delete)
             url: '/api/v1/posts/'+id,
             dataType: 'json',
             contentType:'application/json; charset=utf-8',
