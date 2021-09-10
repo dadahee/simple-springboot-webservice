@@ -22,7 +22,7 @@ public class HelloController {
         // @RequestParam: 외부에서 api로 넘긴 파라미터를 가져오는 어노테이션, 어노테이션의 인자는 외부에서 넘겨준 키 이름
 
         // api를 호출하는 곳에서 name, amount를 넘겨주면
-        // 값에 맞는 dto 객체를 생성ㅇ하여 리턴
+        // 값에 맞는 dto 객체를 생성하여 리턴
         return new HelloResponseDto(name, amount);
     }
 }

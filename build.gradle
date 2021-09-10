@@ -48,6 +48,10 @@ dependencies { // 개발에 필요한 의존성 선언
     // Swagger 사용하기
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+
+    // setting for spring security
+    // 클라이언트 입장에서 소셜 기능 구현 시 필요한 의존성기
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 // 인텔리제이는 메이븐 저장소의 데이터를 인덱싱하여 관리 -> 커뮤니티 버전을 사용해도 의존성 자동완성 가능
 
