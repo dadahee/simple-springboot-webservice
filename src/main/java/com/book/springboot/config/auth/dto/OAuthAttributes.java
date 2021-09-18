@@ -26,6 +26,12 @@ public class OAuthAttributes {
 
     // OAuth2User에서 반환하는 사용자 정보는 Map이기 때문에 값을 변환해주어야 함
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+        // 네이버 로그인 추가
+        if ("naver".equals(registrationId)) {
+            return ofNaver("id", attributes);
+        }
+
+        // 구글 로그인
         return ofGoogle(userNameAttributeName, attributes);
     }
 
@@ -35,6 +41,34 @@ public class OAuthAttributes {
                 .email((String) attributes.get("email"))
                 .picture((String) attributes.get("picture"))
                 .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+
+    private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
+        /* 네이버 오픈 API : 로그인 결과
+        {
+            "resultCode": "00",
+            "message": "success",
+            "response": {
+                "email": "openapi@naver.com",
+                "nickname": "openAPI",
+                "profile_image": "~~~",
+                "age": "20-29",
+                "gender": "F",
+                "id": "32784834",
+                "name": "오픈 api",
+                "birthday": "05-12"
+            }
+        }
+         */
+
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+        return OAuthAttributes.builder()
+                .name((String) response.get("name"))
+                .email((String) response.get("email"))
+                .picture((String) response.get("profileImage"))
+                .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }

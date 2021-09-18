@@ -19,6 +19,7 @@
                 {{/userName}}
                 {{^userName}} <!-- userName이 존재하지 않을 경우 -->
                     <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Sign in with Google</a> <!-- spring security에서 기본 제공하는 로그인 url -->
+                    <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Sign in with Naver</a> <!-- spring security에서 기본 제공하는 로그인 url -->
                 {{/userName}}
             </div>
         </div>
