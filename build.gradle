@@ -55,6 +55,9 @@ dependencies { // 개발에 필요한 의존성 선언
 
     // 세션 저장소로 데이터베이스 사용하기
     implementation 'org.springframework.session:spring-session-jdbc'
+
+    // 스프링 시큐리티를 적용한 테스트를 위해: 스프링 시큐리티 테스트 도구 지원하는 의존성 추가
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 // 인텔리제이는 메이븐 저장소의 데이터를 인덱싱하여 관리 -> 커뮤니티 버전을 사용해도 의존성 자동완성 가능
 
