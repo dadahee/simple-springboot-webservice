@@ -71,36 +71,6 @@ class PostsApiControllerTest {
     }
 
     @Test
-    public void posts_조회된다() throws Exception {
-        //given
-        String title = "Read Test Title";
-        String content = "Read Test Content";
-        String author = "Read Test Author";
-
-//        PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
-//                .title(title)
-//                .content(content)
-//                .author(author)
-//                .build();
-
-        Posts savePosts = postsRepository.save(Posts.builder()
-                .title(title)
-                .content(content)
-                .author(author)
-                .build());
-
-        String url = "http://localhost:" + port + "/api/v1/posts/" + savePosts.getId();
-        HttpEntity<String> requestEntity = new HttpEntity<>("");
-
-        //when
-        //exchange 메소드: HTTP 헤더를 새로 만들 수 있고 어떤 HTTP 메서드도 사용 가능
-        ResponseEntity<PostsResponseDto> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, PostsResponseDto.class);
-
-        //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
-
-    @Test
     @WithMockUser(roles = "USER") // 모의 사용자 만들어 사용, ROLE_USER 권한의 사용자가 API 요청하는 것과 동일
     public void posts_등록된다() throws Exception {
         //given
@@ -116,7 +86,7 @@ class PostsApiControllerTest {
         String url = "http://localhost:" + port + "/api/v1/posts";
 
         //when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+//        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
 
         // mock mvc를 통해 테스트
         // MockMvc에서만 작동하기 때문에, @SpringBootTest에서 MockMvc 사용하도록 수정
@@ -126,8 +96,8 @@ class PostsApiControllerTest {
                 .andExpect(status().isOk());
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
@@ -155,10 +125,10 @@ class PostsApiControllerTest {
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
-        HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
+//        HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 
         //when
-        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
+//        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
 
         // MockMvc에서만 작동하기 때문에, @SpringBootTest에서 MockMvc 사용하도록 수정
         mvc.perform(put(url)
@@ -167,8 +137,8 @@ class PostsApiControllerTest {
                 .andExpect(status().isOk());
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
