@@ -1,9 +1,13 @@
 package com.book.springboot.web;
+import com.book.springboot.config.auth.SecurityConfig;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,9 +24,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 // jUnit5
 @ExtendWith(SpringExtension.class)
-@WebMvcTest // Web(Spring MVC)에 집중할 수 있는 어노테이션
-            // @Controller, @ControllerAdvice 등 사용 가능
-            // @Service, @Component, @Repository 사용 불가
+//@WebMvcTest // Web(Spring MVC)에 집중할 수 있는 어노테이션
+            // WebMvcConfigurer, WebMvcConfigureerAdapter를 비롯한 @Controller, @ControllerAdvice 등 사용 가능
+            // @Service, @Component, @Repository 사용 불가 -> CustomOAuth2UserService 스캔 안 함
+            // SecurityConfig까진 읽지만 이를 위해 필요한 CustomOAuth2UserService를 스캔하지 않아 테스트 문제 발생
+@WebMvcTest(controllers = HelloController.class,
+        excludeFilters = {
+            @ComponentScan.Filter(
+                    type = FilterType.ASSIGNABLE_TYPE,
+                    classes = SecurityConfig.class // 스캔 대상에서 SecurityConfig 삭제
+            )
+        }
+)
 class HelloControllerTest {
 
     // 스프링 빈이 관리하는 빈을 주입 받기
@@ -31,6 +44,7 @@ class HelloControllerTest {
     // 스프링 MVC 테스트의 시작점
     // 이 클래스를 통해 http get, post 등에 대한 api 테스트 가능
 
+    @WithMockUser(roles = "USER")
     @Test
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
@@ -40,6 +54,7 @@ class HelloControllerTest {
                 .andExpect(content().string(hello)); // 응답 본문의 내용 검증
     }
 
+    @WithMockUser(roles = "USER")
     @Test
     public void helloDto가_리턴된다() throws Exception {
         String name = "hello";
