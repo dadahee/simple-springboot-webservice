@@ -4,7 +4,6 @@ buildscript {
     }
     repositories {
         mavenCentral()
-        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -18,11 +17,9 @@ apply plugin: 'io.spring.dependency-management' // spring boot의 의존성 관�
 
 group 'com.spring.book'
 version '1.0-SNAPSHOT'
-sourceCompatibility = 1.8
 
 repositories { // 의존성 라이브러리들을 어떤 원격 저장소에서 받을지 명시
     mavenCentral()
-    jcenter()
 }
 
 dependencies { // 개발에 필요한 의존성 선언
